@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit station</title>
+    <link rel="stylesheet" href="editCreate.css">
+</head>
+<body>
+    <div align="center">
+        <h1>Edit station</h1>
+        <br/>
+        <form th:action="@{/save}" th:object="${editStation}" method="post">
+            <table>
+                <tr>
+                    <td>Station id:</td>
+                    <td><input type="text" th:field="*{id}" readonly="readonly"></td>
+                </tr>
+                <tr>
+                    <td>Station name:</td>
+                    <td><input type="text" th:field="*{radiostation_name}"></td>
+                </tr>
+                <tr>
+                    <td>Station count:</td>
+                    <td><input type="text" th:field="*{count}"></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Edit</button> </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

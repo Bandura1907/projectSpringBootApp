@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Radio Station manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--<div>-->
+<!--    <form th:action="@{/logout}">-->
+<!--        <input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
+<!--        <input type="submit" value="Sign out">-->
+<!--    </form>-->
+<!--</div>-->
+
+<div align="center">
+    <h1>Radio station manager</h1>
+    <a href="/create" class="createButton">Create new radio station</a>
+    <br/><br/>
+    <table class="tableData">
+        <thead>
+        <tr class="trData">
+<!--            <th>ID station</th>-->
+            <th class="thData">Name station</th>
+            <th class="thData">Count station</th>
+            <th class="thData">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stations : ${listStation}" class="trData">
+<!--            <td th:text="${stations.id}">Station id</td>-->
+            <td th:text="${stations.radiostation_name}" class="tdData">Station name</td>
+            <td th:text="${stations.count}" class="tdData">Station count</td>
+            <td class="tdData">
+                <a class="createButton" th:href="@{'/edit/' + ${stations.id}}">Edit</a>
+                <a class="createButton" th:href="@{'/delete/' + ${stations.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
