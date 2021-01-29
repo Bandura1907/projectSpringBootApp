@@ -6,8 +6,9 @@ import javax.persistence.*;
 public class RadioStation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer id_user;
     private String radiostation_name;
     private Integer count;
 
@@ -17,6 +18,14 @@ public class RadioStation {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(Integer id_user) {
+        this.id_user = id_user;
     }
 
     public String getRadiostation_name() {

@@ -1,15 +1,11 @@
 package com.example.ThymeleafJpaProject.controllers;
 
 import com.example.ThymeleafJpaProject.models.RadioStation;
-import com.example.ThymeleafJpaProject.repositories.RadioStationRepo;
 
+import com.example.ThymeleafJpaProject.services.RadioStationService;
 import org.apache.commons.io.FileUtils;
-import org.docx4j.model.table.TblFactory;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.wml.Tbl;
-import org.docx4j.wml.Tc;
-import org.docx4j.wml.Tr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 
 
@@ -26,16 +21,12 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private RadioStationRepo repo;
+    private RadioStationService service;
 
-//    @GetMapping("/")
-//    public String login() {
-//        return "login";
-//    }
 
     @GetMapping("/")
     public String homePage(Model model) {
-        model.addAttribute("listStation", repo.findAll());
+        model.addAttribute("listStation", service.listAll());
         return "index";
     }
 
@@ -47,7 +38,7 @@ public class IndexController {
 
     @RequestMapping(value="/generate", method=RequestMethod.GET)
     public ResponseEntity<byte[]> getPDF() {
-        List<RadioStation> radioStations = repo.findAll();
+        List<RadioStation> radioStations = service.listAll();
 
         File exportFile = new File("welcome.docx");
         byte[] contents;
@@ -80,21 +71,21 @@ public class IndexController {
 
     @PostMapping("/save")
     public String saveStations(@ModelAttribute("radioStation") RadioStation radioStation) {
-        repo.save(radioStation);
+        service.save(radioStation);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("editForm");
-        RadioStation radioStation = repo.findById(id).get();
+        RadioStation radioStation = service.get(id);
         mav.addObject("editStation", radioStation);
         return mav;
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id") int id) {
-        repo.deleteById(id);
+        service.delete(id);
         return "redirect:/";
     }
 }
